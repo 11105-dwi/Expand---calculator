@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expired Time Calculator</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+      padding: 20px;
+        font-family: Arial, sans-serif;
+          background: #eef2f7;
+            color: #1e293b;
+            }
+
+            .container {
+              max-width: 450px;
+                margin: 30px auto;
+                  background: white;
+                    padding: 25px;
+                      border-radius: 18px;
+                        box-shadow: 0 5px 20px #00000012;
+                        }
+
+                        h2 {
+                          text-align: center;
+                            color: #0f766e;
+                              margin-bottom: 8px;
+                              }
+
+                              .subtitle {
+                                text-align: center;
+                                  color: #64748b;
+                                    margin-bottom: 25px;
+                                      font-size: 14px;
+                                      }
+
+                                      label {
+                                        display: block;
+                                          margin: 15px 0 7px;
+                                            font-weight: bold;
+                                            }
+
+                                            input {
+                                              width: 100%;
+                                                padding: 13px;
+                                                  border: 1px solid #cbd5e1;
+                                                    border-radius: 9px;
+                                                      font-size: 16px;
+                                                      }
+
+                                                      button {
+                                                        width: 100%;
+                                                          padding: 14px;
+                                                            margin-top: 20px;
+                                                              background: #0f766e;
+                                                                color: white;
+                                                                  border: none;
+                                                                    border-radius: 9px;
+                                                                      font-size: 16px;
+                                                                        font-weight: bold;
+                                                                        }
+
+                                                                        button:active {
+                                                                          background: #115e59;
+                                                                          }
+
+                                                                          .result {
+                                                                            display: none;
+                                                                              margin-top: 25px;
+                                                                                padding: 18px;
+                                                                                  background: #ecfdf5;
+                                                                                    border-radius: 12px;
+                                                                                      border: 1px solid #a7f3d0;
+                                                                                      }
+
+                                                                                      .result h3 {
+                                                                                        margin-top: 0;
+                                                                                          color: #047857;
+                                                                                            text-align: center;
+                                                                                            }
+
+                                                                                            .result p {
+                                                                                              margin: 12px 0;
+                                                                                              }
+
+                                                                                              .expired-date {
+                                                                                                font-size: 23px;
+                                                                                                  font-weight: bold;
+                                                                                                    color: #047857;
+                                                                                                      text-align: center;
+                                                                                                      }
+
+                                                                                                      .expired-time {
+                                                                                                        font-size: 30px;
+                                                                                                          font-weight: bold;
+                                                                                                            color: #047857;
+                                                                                                              text-align: center;
+                                                                                                              }
+
+                                                                                                              footer {
+                                                                                                                text-align: center;
+                                                                                                                  color: #94a3b8;
+                                                                                                                    font-size: 12px;
+                                                                                                                      margin-top: 25px;
+                                                                                                                      }
+                                                                                                                      </style>
+                                                                                                                      </head>
+
+                                                                                                                      <body>
+                                                                                                                      <div class="container">
+                                                                                                                        <h2>EXPIRED CALCULATOR</h2>
+                                                                                                                          <div class="subtitle">Penghitung Masa Expired Produk</div>
+
+                                                                                                                            <label for="buka">Tanggal dan Jam Buka</label>
+                                                                                                                              <input type="datetime-local" id="buka">
+
+                                                                                                                                <label for="masa">Masa Expired (Jam)</label>
+                                                                                                                                  <input type="number" id="masa" min="0.01" step="any"
+                                                                                                                                           placeholder="Contoh: 48">
+
+                                                                                                                                             <button onclick="hitung()">HITUNG EXPIRED</button>
+
+                                                                                                                                               <div class="result" id="hasil">
+                                                                                                                                                   <h3>HASIL PERHITUNGAN</h3>
+                                                                                                                                                       <p>Tanggal dan jam buka:</p>
+                                                                                                                                                           <p id="waktuBuka"></p>
+                                                                                                                                                               <p>Masa expired:</p>
+                                                                                                                                                                   <p id="masaHasil"></p>
+                                                                                                                                                                       <hr>
+                                                                                                                                                                           <p style="text-align:center">TANGGAL EXPIRED</p>
+                                                                                                                                                                               <div class="expired-date" id="tanggalHasil"></div>
+                                                                                                                                                                                   <div class="expired-time" id="jamHasil"></div>
+                                                                                                                                                                                     </div>
+
+                                                                                                                                                                                       <footer>Expired Time Calculator</footer>
+                                                                                                                                                                                       </div>
+
+                                                                                                                                                                                       <script>
+                                                                                                                                                                                       function formatTanggal(tanggal) {
+                                                                                                                                                                                         return new Intl.DateTimeFormat('id-ID', {
+                                                                                                                                                                                             day: '2-digit',
+                                                                                                                                                                                                 month: '2-digit',
+                                                                                                                                                                                                     year: 'numeric'
+                                                                                                                                                                                                       }).format(tanggal);
+                                                                                                                                                                                                       }
+
+                                                                                                                                                                                                       function formatWaktu(tanggal) {
+                                                                                                                                                                                                         return new Intl.DateTimeFormat('id-ID', {
+                                                                                                                                                                                                             hour: '2-digit',
+                                                                                                                                                                                                                 minute: '2-digit',
+                                                                                                                                                                                                                     hourCycle: 'h23'
+                                                                                                                                                                                                                       }).format(tanggal);
+                                                                                                                                                                                                                       }
+
+                                                                                                                                                                                                                       function hitung() {
+                                                                                                                                                                                                                         const inputBuka = document.getElementById('buka').value;
+                                                                                                                                                                                                                           const masa = Number(document.getElementById('masa').value);
+                                                                                                                                                                                                                             const hasil = document.getElementById('hasil');
+
+                                                                                                                                                                                                                               if (!inputBuka || !Number.isFinite(masa) || masa <= 0) {
+                                                                                                                                                                                                                                   alert('Isi tanggal, jam buka, dan masa expired dengan benar!');
+                                                                                                                                                                                                                                       hasil.style.display = 'none';
+                                                                                                                                                                                                                                           return;
+                                                                                                                                                                                                                                             }
+
+                                                                                                                                                                                                                                               const buka = new Date(inputBuka);
+
+                                                                                                                                                                                                                                                 if (Number.isNaN(buka.getTime())) {
+                                                                                                                                                                                                                                                     alert('Tanggal atau jam buka tidak valid.');
+                                                                                                                                                                                                                                                         hasil.style.display = 'none';
+                                                                                                                                                                                                                                                             return;
+                                                                                                                                                                                                                                                               }
+
+                                                                                                                                                                                                                                                                 const expired = new Date(buka.getTime() + masa * 60 * 60 * 1000);
+
+                                                                                                                                                                                                                                                                   document.getElementById('waktuBuka').textContent =
+                                                                                                                                                                                                                                                                       formatTanggal(buka) + ' | ' + formatWaktu(buka);
+
+                                                                                                                                                                                                                                                                         document.getElementById('masaHasil').textContent = masa + ' jam';
+
+                                                                                                                                                                                                                                                                           document.getElementById('tanggalHasil').textContent =
+                                                                                                                                                                                                                                                                               formatTanggal(expired);
+
+                                                                                                                                                                                                                                                                                 document.getElementById('jamHasil').textContent =
+                                                                                                                                                                                                                                                                                     formatWaktu(expired);
+
+                                                                                                                                                                                                                                                                                       hasil.style.display = 'block';
+                                                                                                                                                                                                                                                                                       }
+                                                                                                                                                                                                                                                                                       </script>
+                                                                                                                                                                                                                                                                                       </body>
+                                                                                                                                                                                                                                                                                       </html>
